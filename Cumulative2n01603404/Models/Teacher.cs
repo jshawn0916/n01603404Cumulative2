@@ -14,7 +14,6 @@ namespace Cumulative2n01603404.Models
         public string EmployeeNumber;
         public DateTime HireDate;
         public decimal Salary;
-        public string ClassName;
 
         //parameter-less constructor function
         public Teacher() { }

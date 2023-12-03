@@ -4,10 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-//Make sure to install MySQL.Data!
-//Install via Tools > NuGet package manager > manage nuget packages for solution
-//"Browse" tab
-//search for mysql.data and install to project
 using MySql.Data.MySqlClient;
 
 namespace Cumulative2n01603404.Models

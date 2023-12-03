@@ -1,4 +1,4 @@
-﻿
+﻿@model Cumulative2n01603404.Models.Teacher
 @{
     ViewBag.Title = "New";
 }
@@ -7,8 +7,8 @@
     <nav>
         <a class="navlink" href="/Teacher/List">Back To Teachers</a>
     </nav>
-    <h2>New Author</h2>
-    <form method="POST" action="/Teacher/Create">
+    <h2>New Teacher</h2>
+    <form method="POST" action="#" name="newTeacher" onsubmit="return AddTeacher();">
         <div class="inputrow">
             <label for="TeacherFname">First Name:</label>
             <input type="text" id="TeacherFname" name="TeacherFname" />

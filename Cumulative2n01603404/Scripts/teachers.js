@@ -1,51 +1,76 @@
-﻿// AJAX for teacher here
+﻿
+
+
+// AJAX for teacher here
 // This file is connected to the project via Shared/_Layout.cshtml
 
 
 function AddTeacher() {
 
-	//goal: send a request which looks like this:
-	//POST : http://localhost:44374/api/TeacherData/AddTeacher
-	//with POST data of teachername, employeenumber, hire date, etc.
+	var formHandle = document.forms.addTeacher;
 
-	var URL = "http://localhost:44374/api/TeacherData/AddTeacher/";
+	var TeacherFname = formHandle.TeacherFname.value;
+	var TeacherLname = formHandle.TeacherLname.value;
+	var EmployeeNumber = formHandle.EmployeeNumber.value;
+	var Salary = formHandle.Salary.value;
+
+	//input validation
+	if (TeacherFname == false || TeacherLname == false || EmployeeNumber == false || Salary == false) {
+		alert('Enter all information');
+		return false;
+	}
+
+	var formData = new FormData(formHandle);
+	formData.append('TeacherFname', TeacherFname);
+	formData.append('TeacherLname', TeacherLname);
+	formData.append('EmployeeNumber', EmployeeNumber);
+	formData.append('Salary', Salary);
 
 	var rq = new XMLHttpRequest();
-	// where is this request sent to?
-	// is the method GET or POST?
-	// what should we do with the response?
 
-	var TeacherFname = document.getElementById('TeacherFname').value;
-	var TeacherLname = document.getElementById('TeacherLname').value;
-	var EmployeeNumber = document.getElementById('EmployeeNumber').value;
-	var HireDate = document.getElementById('HireDate').value;
-	var Salary = document.getElementById('Salary').value;
+	//goal: send a request which looks like this:
+	//POST : http://localhost:44374/api/Teacher/Create
+	//with POST data of teachername, employeenumber, hire date, etc.
 
+	var URL = "/Teacher/Create";
 
-
-	var TeacherData = {
-		"TeacherFname": TeacherFname,
-		"TeacherLname": TeacherLname,
-		"EmployeeNumber": EmployeeNumber,
-		"HireDate": HireDate,
-		"Salary": Salary
-	};
-
-
+	//Create XMLHttpRequest object
 	rq.open("POST", URL, true);
-	rq.setRequestHeader("Content-Type", "application/json");
+
 	rq.onreadystatechange = function () {
 		//ready state should be 4 AND status should be 200
 		if (rq.readyState == 4 && rq.status == 200) {
 			//request is successful and the request is finished
-
-			//nothing to render, the method returns nothing.
-
-
+			location.href = '/Teacher/List';
+		} else {
+			alert("Check again your information");
+			console.error(rq.status);
 		}
 
 	}
 	//POST information sent through the .send() method
-	rq.send(JSON.stringify(TeacherData));
+	rq.send(formData);
+
+	return false;
+}
+
+function DeleteTeacher(teacherId) {
+
+	var rq = new XMLHttpRequest();
+	var URL = "/Teacher/Delete/" + Number(teacherId);
+
+	//Create XMLHttpRequest object
+	rq.open("POST", URL, true);
+	rq.onreadystatechange = function () {
+		//ready state should be 4 AND status should be 200
+		if (rq.readyState == 4 && rq.status == 200) {
+			//request is successful and the request is finished
+			location.href = '/Teacher/List';
+		} else {
+			console.error(rq.status);
+		}
+
+	}
+	rq.send();
 
 }

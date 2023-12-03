@@ -69,9 +69,16 @@ namespace Cumulative2n01603404.Controllers
         [HttpPost]
         public ActionResult Create(string TeacherFname, string TeacherLname, string EmployeeNumber, DateTime HireDate, decimal Salary)
         {
+
+            // validation input values
+            // Redirect to List when teacher arleady exist. new -> Redirect to New
+            if (TeacherFname == "" || TeacherLname == "" || EmployeeNumber == "" || Salary < 0)
+            {
+
+                return new HttpStatusCodeResult(400, "Bad Request");
+            }
             //Identify that this method is running
             //Identify the inputs provided from the form
-
             Debug.WriteLine("I have accessed the Create Method!");
             Debug.WriteLine(TeacherFname);
             Debug.WriteLine(TeacherLname);
@@ -87,7 +94,7 @@ namespace Cumulative2n01603404.Controllers
             NewATeacher.Salary = Salary;
 
             TeacherDataController controller = new TeacherDataController();
-            controller.AddAuthor(NewATeacher);
+            controller.AddTeacher(NewATeacher);
 
             return RedirectToAction("List");
         }

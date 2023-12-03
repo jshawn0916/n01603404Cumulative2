@@ -136,6 +136,7 @@ namespace Cumulative2n01603404.Controllers
         /// <param name="id">The ID of the teacher.</param>
         /// <example>POST /api/TeacherData/DeleteTeacher/3</example>
         [HttpPost]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void DeleteTeacher(int id)
         {
             //Create an instance of a connection
@@ -144,33 +145,25 @@ namespace Cumulative2n01603404.Controllers
             //Open the connection between the web server and database
             Conn.Open();
 
-            //Establish a new command (query) for our database
-            MySqlCommand cmd = Conn.CreateCommand();
-
+            //Establish a new update (query) for our database
+            MySqlCommand updateCmd = Conn.CreateCommand();
             //SQL QUERY
-            cmd.CommandText = "Delete from teachers where teacherid=@id";
-            cmd.Parameters.AddWithValue("@id", id);
-            cmd.Prepare();
+            updateCmd.CommandText = "Update classes set teacherid= null where teacherid =@id";
+            updateCmd.Parameters.AddWithValue("@id", id);
+            updateCmd.Prepare();
+            updateCmd.ExecuteNonQuery();
 
-            cmd.ExecuteNonQuery();
+            //Establish a new update (query) for our database
+            MySqlCommand deleteCmd = Conn.CreateCommand();
+            //SQL QUERY
+            deleteCmd.CommandText = "Delete from teachers where teacherid=@id";
+            deleteCmd.Parameters.AddWithValue("@id", id);
+            deleteCmd.Prepare();
+            deleteCmd.ExecuteNonQuery();
 
             Conn.Close();
 
 
-        }
-
-        [HttpPost]
-        public IHttpActionResult RemoveTeacher(int id)
-        {
-            try
-            {
-              
-                return Ok("Teacher removed successfully");
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
         }
 
         /// <summary>
@@ -194,7 +187,7 @@ namespace Cumulative2n01603404.Controllers
             //Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
 
-            Debug.WriteLine(NewTeacher.TeacherFname); 
+            Debug.WriteLine(NewTeacher.TeacherFname);
 
             //Open the connection between the web server and database
             Conn.Open();

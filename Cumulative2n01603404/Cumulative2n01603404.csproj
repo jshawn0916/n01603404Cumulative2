@@ -290,7 +290,6 @@
     <Content Include="Views\Teacher\Show.cshtml" />
     <Content Include="Views\Teacher\New.cshtml" />
     <Content Include="Views\Teacher\DeleteConfirm.cshtml" />
-    <Content Include="Views\Teacher\Ajax_new.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
